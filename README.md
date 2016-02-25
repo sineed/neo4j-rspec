@@ -1,4 +1,4 @@
-# Neo4j::Rspec
+# Neo4j::Rspec [![Build Status](https://travis-ci.org/sineed/neo4j-rspec.svg?branch=master)](https://travis-ci.org/sineed/neo4j-rspec)
 
 TODO: Put some examples of usage:
 - [] have_many
