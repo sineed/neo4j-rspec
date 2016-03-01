@@ -2,220 +2,140 @@ module Neo4j
   module RSpec
     module Matchers
       module HasN
-        class BaseMatcher
-          attr_reader :matcher, :value, :key, :actual
+        module With
+          class Base
+            attr_reader :expected
 
-          def initialize(matcher, value)
-            @matcher = matcher
-            @value = convert_value(value)
-          end
-
-          def add
-            matcher.expectation_message << expectation_message
-            matcher.association[key] = self
-            matcher
-          end
-
-          def add_negative
-            matcher.expectation_message << negative_expectation_message
-            matcher.association[key] = self
-            matcher
-          end
-
-          def matches?(actual)
-            @actual = extact_actual(actual)
-            if matches
-              matcher.negative_result_message = result_message
-              false
-            else
-              matcher.positive_result_message = result_message
-              true
+            def initialize(expected)
+              @expected = expected
             end
           end
 
-          private
+          class DirectionMatcher < Base
+            def match(association)
+              expected == association.direction
+            end
 
-          def matches
-            value != actual
-          end
-
-          def convert_value(val)
-            val
-          end
-        end
-
-        class DirectionMatcher < BaseMatcher
-          private
-
-          def key
-            :direction
-          end
-
-          def extact_actual(actual)
-            actual.direction
-          end
-
-          def expectation_message
-            " with #{value} direction"
-          end
-
-          def result_message
-            "#{actual} direction"
-          end
-        end
-
-        class TypeMatcher < BaseMatcher
-          private
-
-          def key
-            :type
-          end
-
-          def extact_actual(actual)
-            actual.relationship_type
-          end
-
-          def expectation_message
-            " with #{value} relationship type"
-          end
-
-          def negative_expectation_message
-            " without relationship type"
-          end
-
-          def result_message
-            "#{actual} relationship type"
-          end
-        end
-
-        class OriginMatcher < BaseMatcher
-          private
-
-          def key
-            :origin
-          end
-
-          def extact_actual(actual)
-            actual.relationship_type
-          end
-
-          def expectation_message
-            " with #{value} origin"
-          end
-
-          def result_message
-            "#{actual} origin"
-          end
-        end
-
-        class ModelClassesMatcher < BaseMatcher
-          private
-
-          def key
-            :model_classes
-          end
-
-          def convert_value(val)
-            Array(val)
-          end
-
-          def extact_actual(actual)
-            Array(actual.model_class)
-          end
-
-          def matches
-            (value & actual) != value
-          end
-
-          def expectation_message
-            " with #{value.join(", ")} model classes"
-          end
-
-          def result_message
-            "#{actual.join(", ")} model classes"
-          end
-        end
-
-
-        class AssociationMatcher
-          attr_accessor :association, :expectation_message, :negative_result_message,
-            :positive_result_message
-
-          def initialize(name, macro)
-            @association = {}
-            @association[:name] = name.to_sym
-            @association[:macro] = macro
-            @expectation_message = "#{macro_description} #{@association[:name]}"
-          end
-
-          def macro_description
-            case association[:macro]
-            when :has_many then "have many"
-            when :has_one then "have one"
+            def description
+              "with #{expected} direction"
             end
           end
 
-          def matchers
-            association.select { |_, v| v.is_a? BaseMatcher }
-          end
-
-          def with_direction(direction)
-            DirectionMatcher.new(self, direction).add
-          end
-
-          def with_type(type)
-            TypeMatcher.new(self, type).add
-          end
-
-          def without_type
-            TypeMatcher.new(self, false).add_negative
-          end
-
-          def with_origin(origin)
-            OriginMatcher.new(self, origin).add
-          end
-
-          def with_model_class(model_class)
-            ModelClassesMatcher.new(self, model_class).add
-          end
-
-          def matches?(actual)
-            @actual = actual
-            actual_association = actual.class.associations[association[:name]]
-
-            unless actual_association
-              self.negative_result_message = "no association named #{association[:name]}"
-              return false
-            else
-              self.positive_result_message = "association named #{association[:name]}"
+          class OriginMatcher < Base
+            def match(association)
+              expected == association.relationship_type
             end
 
-            matchers.each do |_, matcher|
-              return false unless matcher.matches?(actual_association)
+            def description
+              "with #{expected} origin"
+            end
+          end
+
+          class TypeMatcher < Base
+            def match(association)
+              expected == association.relationship_type
             end
 
-            true
+            def description
+              "with #{expected} type"
+            end
           end
 
-          def failure_message
-            "Expected #{@actual.class} to #{expectation_message}, got #{negative_result_message}"
-          end
+          class ModelClassMatcher < Base
+            def match(association)
+              actual = Array(association.model_class)
+              actual & expected == actual
+            end
 
-          def failure_message_when_negated
-            "Expected #{@actual.class} to not #{expectation_message}, got #{positive_result_message}"
-          end
-
-          def description
-            expectation_message
+            def description
+              "with #{expected.join(', ')} model class"
+            end
           end
         end
 
-        def have_many(association_name)
-          AssociationMatcher.new(association_name, :has_many)
+        module Without
+          class TypeMatcher
+            def match(association)
+              !association.relationship_type
+            end
+
+            def description
+              "without type"
+            end
+          end
         end
 
-        def have_one(association_name)
-          AssociationMatcher.new(association_name, :has_one)
+        class HaveMany
+          def name
+            :have_many
+          end
+
+          def description(model_name)
+            "have many #{model_name}"
+          end
+
+          def failure_message(model_name)
+            "expected the #{model_name} model to have many #{name}"
+          end
+        end
+
+        class HaveOne
+          def name
+            :have_one
+          end
+
+          def description(model_name)
+            "have one #{model_name}"
+          end
+
+          def failure_message(model_name)
+            "expected the #{model_name} model to have one #{name}"
+          end
+        end
+
+        extend ::RSpec::Matchers::DSL
+
+        [HaveMany.new, HaveOne.new].each do |macro|
+          matcher macro.name do |association_name|
+            def matchers
+              @matchers ||= []
+            end
+
+            match do |model|
+              association = model.class.associations[association_name]
+              association && matchers.all? { |m| m.match(association) }
+            end
+
+            chain :with_direction do |direction|
+              matchers.push With::DirectionMatcher.new(direction)
+            end
+
+            chain :with_origin do |origin|
+              matchers.push With::OriginMatcher.new(origin)
+            end
+
+            chain :with_type do |type|
+              matchers.push With::TypeMatcher.new(type)
+            end
+
+            chain :with_model_class do |*model_classes|
+              matchers.push With::ModelClassMatcher.new(model_classes)
+            end
+
+            chain :without_type do
+              matchers.push Without::TypeMatcher.new
+            end
+
+            description do |model|
+              with_messages = matchers.map(&:description).join(" ")
+              macro.description(model.class.name) + " " + with_messages
+            end
+
+            failure_message do |model|
+              with_messages = matchers.map(&:description).join(" ")
+              macro.failure_message(model.class.name) + " " + with_messages
+            end
+          end
         end
       end
     end
