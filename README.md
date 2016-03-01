@@ -1,32 +1,45 @@
 # Neo4j::Rspec [![Build Status](https://travis-ci.org/sineed/neo4j-rspec.svg?branch=master)](https://travis-ci.org/sineed/neo4j-rspec)
 
+## Install
+Add line into your Gemfile:
+```ruby
+gem "neo4j-rspec"
+```
+or install it directly
+
+```
+gem install neo4j-rspec
+```
+
 ## Examples
 
+### Properties
+
 ```ruby
-subject { ModelClass }
-
-# Properties
-
 it { is_expected.to define_property :general }
 it { is_expected.to define_property :string, String }
 it { is_expected.to define_property :boolean, Boolean } # This might need to be `ActiveAttr::Typecasting::Boolean`
+```
 
-it { is_expected.to have_many(:written_things).with_direction(:in).without_type.with_model_class([:Post, :Comment]) }
 
-# etc...
+### `has_one` and `has_many`
 
-# `has_one` and `has_many`
-
+```ruby
 it { is_expected.to have_many(:comments) }
 it { is_expected.to have_many(:comments).with_direction(:in) }
 it { is_expected.to have_many(:comments).with_direction(:in).with_origin(:post) }
+it { is_expected.to have_many(:written_things).with_direction(:in).without_type.with_model_class([:Post, :Comment]) }
+```
 
-# Constraints
+### Constraints
 
+```ruby
 it { is_expected.to define_constraint :name, :unique }
+```
 
-# `created_at` and `updated_at`
+### `created_at` and `updated_at`
 
+```ruby
 it { is_expected.to track_creations } # `created_at`
 it { is_expected.to track_modifications } # `updated_at`
 
