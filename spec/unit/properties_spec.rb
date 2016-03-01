@@ -26,5 +26,10 @@ RSpec.describe "Property matchers" do
     it { is_expected.not_to track_modifications }
     it { is_expected.not_to track_creations }
   end
+
+  describe Person do
+    it { is_expected.to define_index(:nickname) }
+    it { is_expected.to define_index(:reserved) }
+  end
 end
 

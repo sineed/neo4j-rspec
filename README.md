@@ -42,10 +42,16 @@ it { is_expected.to define_constraint :name, :unique }
 ```ruby
 it { is_expected.to track_creations } # `created_at`
 it { is_expected.to track_modifications } # `updated_at`
-
 ```
 
-TODO: Put some examples of usage:
-- [ ] define_index
+### `index`
+
+```ruby
+it { is_expected.to define_index(:index_name) }
+```
+
+##TODO
+
+Put some examples of usage:
 - [ ] come_from_model
 - [ ] lead_to_model
