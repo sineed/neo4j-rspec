@@ -58,6 +58,23 @@ module Neo4j
             "expected the #{model.name} model not to have a #{type} constraint on #{name}"
           end
         end
+
+        matcher :define_index do |name|
+          fail ArgumentError, 'index name should be given' if name.blank?
+
+          match do |model|
+            model.attributes.key?(name.to_s) &&
+              model.declared_properties[name.to_s].index?
+          end
+
+          failure_message do |model|
+            "expected the #{model.class.name} model to have an exact index on #{name} property"
+          end
+
+          failure_message_when_negated do |model|
+            "expected the #{model.class.name} model not to have an exact index on #{name} property"
+          end
+        end
       end
     end
   end
