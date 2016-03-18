@@ -5,3 +5,7 @@ sudo: false
 rvm:
   - 2.2.0
   - 2.3.0
+gemfile: travis.gemfile
+env:
+  - NEO4J_VERSION=6.0.0
+  - NEO4J_VERSION=7.0.0
