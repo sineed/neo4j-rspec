@@ -1,6 +1,10 @@
 # Neo4j::Rspec [![Build Status](https://travis-ci.org/sineed/neo4j-rspec.svg?branch=master)](https://travis-ci.org/sineed/neo4j-rspec)
 
+This gem contains of several testing one-liners for [neo4j](https://github.com/neo4jrb/neo4j) gem.
+
+
 ## Install
+
 Add line into your Gemfile:
 ```ruby
 gem "neo4j-rspec"
@@ -11,47 +15,59 @@ or install it directly
 gem install neo4j-rspec
 ```
 
+
 ## Examples
 
-### Properties
+### ActiveNode matchers:
 
-```ruby
-it { is_expected.to define_property :general }
-it { is_expected.to define_property :string, String }
-it { is_expected.to define_property :boolean, Boolean } # This might need to be `ActiveAttr::Typecasting::Boolean`
-```
+- Properties
+
+        ```ruby
+        it { is_expected.to define_property :general }
+        it { is_expected.to define_property :string, String }
+        it { is_expected.to define_property :boolean, Boolean } # This might need to be `ActiveAttr::Typecasting::Boolean`
+        ```
+- Relationships
+
+        ```ruby
+        it { is_expected.to have_many(:comments) }
+        it { is_expected.to have_many(:comments).with_direction(:in) }
+        it { is_expected.to have_many(:comments).with_direction(:in).with_origin(:post) }
+        it { is_expected.to have_many(:written_things).with_direction(:in).without_type.with_model_class([:Post, :Comment]) }
+        ```
+- Constraints
+
+        ```ruby
+        it { is_expected.to define_constraint :name, :unique }
+        ```
+- Indexes
+
+        ```ruby
+        it { is_expected.to define_index(:index_name) }
+        ```
+- Tracking
+
+        ```ruby
+        it { is_expected.to track_creations } # `created_at`
+        it { is_expected.to track_modifications } # `updated_at`
+        ```
 
 
-### `has_one` and `has_many`
+### ActiveRel matchers:
 
-```ruby
-it { is_expected.to have_many(:comments) }
-it { is_expected.to have_many(:comments).with_direction(:in) }
-it { is_expected.to have_many(:comments).with_direction(:in).with_origin(:post) }
-it { is_expected.to have_many(:written_things).with_direction(:in).without_type.with_model_class([:Post, :Comment]) }
-```
+- Directions
 
-### Constraints
+        ```ruby
+        it { is_expected.to come_from(:Person) }
+        it { is_expected.to lead_to(:any) }
+        ```
+- Types
 
-```ruby
-it { is_expected.to define_constraint :name, :unique }
-```
+        ```ruby
+        it { is_expected.to have_relationship_type("WROTE") }
+        ```
 
-### `created_at` and `updated_at`
 
-```ruby
-it { is_expected.to track_creations } # `created_at`
-it { is_expected.to track_modifications } # `updated_at`
-```
+### Need yet another matcher?
 
-### `index`
-
-```ruby
-it { is_expected.to define_index(:index_name) }
-```
-
-##TODO
-
-Put some examples of usage:
-- [ ] come_from_model
-- [ ] lead_to_model
+Welcome! Feel free to post an [issue](https://github.com/sineed/neo4j-rspec/issues/new). Contributions are welcome too.
