@@ -4,6 +4,7 @@ require "neo4j"
 require "pry"
 
 Dir[File.join(File.dirname(__FILE__), "nodes", "*.rb")].each { |file| require file }
+Dir[File.join(File.dirname(__FILE__), "rels", "*.rb")].each { |file| require file }
 
 module Neo4jHelpers
   def server_username
