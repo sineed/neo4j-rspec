@@ -2,8 +2,6 @@
 
 This gem contains of several testing one-liners for [neo4j](https://github.com/neo4jrb/neo4j) gem.
 
-Current version (0.2.x) supports 7th version of neo4jrb gem. If you use 6th version of neo4jrb gem you should use 0.1.2 version.
-
 ## Install
 
 Add line into your Gemfile:
@@ -24,8 +22,8 @@ gem install neo4j-rspec
 - Properties
 
         it { is_expected.to define_property :general }
-        it { is_expected.to define_property :string, String }
-        it { is_expected.to define_property :boolean, Neo4j::Shared::Boolean }
+        it { is_expected.to define_property :string, :String }
+        it { is_expected.to define_property :boolean, :Boolean }
 - Relationships
 
         it { is_expected.to have_many(:comments) }
