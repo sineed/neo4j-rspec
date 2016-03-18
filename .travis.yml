@@ -7,6 +7,8 @@ rvm:
   - 2.3.0
 gemfile: travis.gemfile
 env:
+  global:
   - TRAVISCI=1
+  matrix:
   - NEO4J_VERSION=6.0.0
   - NEO4J_VERSION=7.0.0
