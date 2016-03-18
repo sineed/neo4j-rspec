@@ -47,7 +47,7 @@ module Neo4j
 
           match do |model|
             model.attributes.key?(name.to_s) &&
-              model.attributes[name.to_s][:constraint] == type
+              model.attributes[name.to_s].constraint?(type)
           end
 
           failure_message do |model|
