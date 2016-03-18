@@ -6,9 +6,9 @@ RSpec.describe "Property matchers" do
 
     describe 'define_property' do
       it { is_expected.to define_property(:title) }
-      it { is_expected.to define_property(:published, ActiveAttr::Typecasting::Boolean) }
+      it { is_expected.to define_property(:published, Neo4j::Shared::Boolean) }
 
-      it { is_expected.not_to define_property(:non_existant, ActiveAttr::Typecasting::Boolean) }
+      it { is_expected.not_to define_property(:non_existant, Neo4j::Shared::Boolean) }
     end
 
     describe 'define_constraint' do
