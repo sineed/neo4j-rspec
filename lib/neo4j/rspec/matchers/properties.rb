@@ -28,8 +28,15 @@ module Neo4j
 
         matcher :define_property do |name, type = nil|
           match do |model|
-            model.attributes.key?(name.to_s) &&
-              (type ? model.attributes[name.to_s][:type] == type : true)
+            name = name.to_s
+            return false unless model.attributes.key?(name)
+
+            if type
+              nesting = Neo4j::RSpec::Compat.current.property_nesting
+              [nesting, Module].any? { |md| md.constants.any? { |c| type == c } }
+            else
+              true
+            end
           end
 
           failure_message do |model|
@@ -47,7 +54,7 @@ module Neo4j
 
           match do |model|
             model.attributes.key?(name.to_s) &&
-              model.attributes[name.to_s].constraint?(type)
+              Neo4j::RSpec::Compat.current.property_constraint?(model.attributes[name.to_s], type)
           end
 
           failure_message do |model|

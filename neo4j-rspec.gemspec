@@ -16,6 +16,6 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "neo4j", "~> 7"
+  spec.add_dependency "neo4j", ">= 6.0.0"
   spec.add_dependency "rspec", "~> 3.4"
 end
