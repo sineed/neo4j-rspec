@@ -52,6 +52,12 @@ gem install neo4j-rspec
 
         it { is_expected.to have_relationship_type("WROTE") }
 
+- Create Unique
+
+        it { is_expected.to use_create_unique }
+        it { is_expected.to use_create_unique(:all) }
+        it { is_expected.to use_create_unique(on: [:key1, :key2]) }
+
 
 ## Need yet another matcher?
 

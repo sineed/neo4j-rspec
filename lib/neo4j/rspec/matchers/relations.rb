@@ -45,6 +45,30 @@ module Neo4j
             "expected the #{rel.class.name} relation not to have a relationship type #{type}"
           end
         end
+
+        matcher :use_create_unique do |arg|
+          match do |rel|
+            rel.class.unique? && (arg.nil? || arg == rel.class.creates_unique_option)
+          end
+
+          description do
+            msg = "use CREATE UNIQUE"
+            msg += " with option #{arg}" if arg
+            msg
+          end
+
+          failure_message do |rel|
+            msg = "expected the #{rel.class.name} relation to use CREATE UNIQUE clause"
+            msg += " with option #{arg}" if arg
+            msg
+          end
+
+          failure_message_when_negated do |rel|
+            msg = "expected the #{rel.class.name} relation not to use CREATE UNIQUE clause"
+            msg += " with option #{arg}" if arg
+            msg
+          end
+        end
       end
     end
   end

@@ -3,4 +3,6 @@ class Wrote
 
   from_class :Person
   to_class :any
+
+  property :uid
 end
