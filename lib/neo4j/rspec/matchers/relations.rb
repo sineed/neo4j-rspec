@@ -10,11 +10,11 @@ module Neo4j
           end
 
           failure_message do |rel|
-            "expected the #{rel.class.name} relation to come from #{model_sym}"
+            "#{failure_start(rel)} to come from #{model_sym}"
           end
 
           failure_message_when_negated do |rel|
-            "expected the #{rel.class.name} relation not to come from #{model_sym}"
+            "#{failure_start(rel)} not to come from #{model_sym}"
           end
         end
 
@@ -24,11 +24,11 @@ module Neo4j
           end
 
           failure_message do |rel|
-            "expected the #{rel.class.name} relation to lead to #{model_sym}"
+            "#{failure_start(rel)} to lead to #{model_sym}"
           end
 
           failure_message_when_negated do |rel|
-            "expected the #{rel.class.name} relation not to lead to #{model_sym}"
+            "#{failure_start(rel)} not to lead to #{model_sym}"
           end
         end
 
@@ -38,11 +38,11 @@ module Neo4j
           end
 
           failure_message do |rel|
-            "expected the #{rel.class.name} relation to have a relationship type #{type}"
+            "#{failure_start(rel)} to have a relationship type #{type}"
           end
 
           failure_message_when_negated do |rel|
-            "expected the #{rel.class.name} relation not to have a relationship type #{type}"
+            "#{failure_start(rel)} not to have a relationship type #{type}"
           end
         end
 
@@ -58,15 +58,25 @@ module Neo4j
           end
 
           failure_message do |rel|
-            msg = "expected the #{rel.class.name} relation to use CREATE UNIQUE clause"
-            msg += " with option #{arg}" if arg
+            msg = "#{failure_start(rel)} to use CREATE UNIQUE clause"
+            if arg
+              actual = rel.class.creates_unique_option
+              msg += "\n  expected option: #{arg}\n    actual option: #{actual}"
+            end
             msg
           end
 
           failure_message_when_negated do |rel|
-            msg = "expected the #{rel.class.name} relation not to use CREATE UNIQUE clause"
-            msg += " with option #{arg}" if arg
+            msg = "#{failure_start(rel)} not to use CREATE UNIQUE clause"
+            if arg
+              actual = rel.class.creates_unique_option
+              msg += "\n  expected option: #{arg}\n    actual option: #{actual}"
+            end
             msg
+          end
+
+          def failure_start(rel)
+            "expected the #{rel.class.name} relation"
           end
         end
       end
