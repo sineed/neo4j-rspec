@@ -14,6 +14,14 @@ or install it directly
 gem install neo4j-rspec
 ```
 
+Then configure it in your `spec_helper` (or `rails_helper`):
+
+```ruby
+RSpec.configure do |config|
+  config.include Neo4j::RSpec::Matchers
+  # ... other configuration ...
+end
+```
 
 ## Examples
 
