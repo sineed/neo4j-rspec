@@ -1,9 +1,7 @@
 require "spec_helper"
 
 RSpec.describe "Property matchers" do
-  describe 'Post model' do
-    subject { Post }
-
+  describe Post do
     describe 'define_property' do
       it { is_expected.to define_property(:title) }
       it { is_expected.to define_property(:description, :String) }
@@ -21,9 +19,7 @@ RSpec.describe "Property matchers" do
     it { is_expected.to track_creations }
   end
 
-  context 'A model which does not track creations / modifications' do
-    subject { Comment }
-
+  describe Comment do
     it { is_expected.not_to track_modifications }
     it { is_expected.not_to track_creations }
   end

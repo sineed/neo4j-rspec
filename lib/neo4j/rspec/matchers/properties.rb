@@ -8,28 +8,30 @@ module Neo4j
 
         matcher :track_creations do
           match do |model|
-            model.attributes[:created_at] && model.attributes[:created_at][:type] == DateTime
+            klass = model.class
+            klass.attributes[:created_at] && klass.attributes[:created_at][:type] == DateTime
           end
 
           failure_message do |model|
-            "expected the #{model.name} model to track creations (`created_at`)"
+            "expected the #{model.class.name} model to track creations (`created_at`)"
           end
         end
 
         matcher :track_modifications do
           match do |model|
-            model.attributes[:updated_at] && model.attributes[:updated_at][:type] == DateTime
+            klass = model.class
+            klass.attributes[:updated_at] && klass.attributes[:updated_at][:type] == DateTime
           end
 
           failure_message do |model|
-            "expected the #{model.name} model to track modifications (`updated_at`)"
+            "expected the #{model.class.name} model to track modifications (`updated_at`)"
           end
         end
 
         matcher :define_property do |name, type = nil|
           match do |model|
             name = name.to_s
-            return false unless model.attributes.key?(name)
+            return false unless model.class.attributes.key?(name)
 
             if type
               nesting = Neo4j::RSpec::Compat.current.property_nesting
@@ -40,11 +42,11 @@ module Neo4j
           end
 
           failure_message do |model|
-            "expected the #{model.name} model to have a `#{type}` property #{name}"
+            "expected the #{model.class.name} model to have a `#{type}` property #{name}"
           end
 
           failure_message_when_negated do |model|
-            "expected the #{model.name} model not to have a `#{type}` property #{name}"
+            "expected the #{model.class.name} model not to have a `#{type}` property #{name}"
           end
         end
 
@@ -53,16 +55,17 @@ module Neo4j
           fail ArgumentError, 'constraint type should be given' if type.blank?
 
           match do |model|
-            model.attributes.key?(name.to_s) &&
-              Neo4j::RSpec::Compat.current.property_constraint?(model.attributes[name.to_s], type)
+            klass = model.class
+            klass.attributes.key?(name.to_s) &&
+              Neo4j::RSpec::Compat.current.property_constraint?(klass.attributes[name.to_s], type)
           end
 
           failure_message do |model|
-            "expected the #{model.name} model to have a #{type} constraint on #{name}"
+            "expected the #{model.class.name} model to have a #{type} constraint on #{name}"
           end
 
           failure_message_when_negated do |model|
-            "expected the #{model.name} model not to have a #{type} constraint on #{name}"
+            "expected the #{model.class.name} model not to have a #{type} constraint on #{name}"
           end
         end
 
@@ -70,7 +73,7 @@ module Neo4j
           fail ArgumentError, 'index name should be given' if name.blank?
 
           match do |model|
-            model.attributes.key?(name.to_s) &&
+            model.class.attributes.key?(name.to_s) &&
               model.declared_properties[name.to_s].index?
           end
 
