@@ -128,7 +128,7 @@ module Neo4j
 
             description do |model|
               with_messages = matchers.map(&:description).join(" ")
-              macro.description(model.class.name) + " " + with_messages
+              macro.description(association_name) + " " + with_messages
             end
 
             failure_message do |model|
