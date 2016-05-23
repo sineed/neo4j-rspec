@@ -33,5 +33,13 @@ RSpec.describe "Has N" do
     it { is_expected.to have_many(:written_things).with_direction(:in) }
     it { is_expected.to have_many(:written_things).with_direction(:in).without_type }
     it { is_expected.to have_many(:written_things).with_direction(:in).without_type.with_model_class(:Post, :Comment) }
+    it { is_expected.to have_one(:profile) }
+    it { is_expected.to have_one(:profile).with_direction(:in) }
   end
+
+  describe Profile do
+    it { is_expected.to have_one(:person) }
+    it { is_expected.to have_one(:person).with_direction(:out) }
+  end
+
 end
