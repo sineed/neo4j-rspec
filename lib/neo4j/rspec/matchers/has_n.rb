@@ -43,7 +43,7 @@ module Neo4j
 
           class ModelClassMatcher < Base
             def match(association)
-              actual = Array(association.model_class)
+              actual = association.target_classes.map { |m| m.to_s.to_sym }
               actual & expected == actual
             end
 

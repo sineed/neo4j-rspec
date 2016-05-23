@@ -15,6 +15,7 @@ RSpec.describe "Has N" do
     it { is_expected.to have_one(:post) }
     it { is_expected.to have_one(:post).with_direction(:out) }
     it { is_expected.to have_one(:post).with_direction(:out).with_type(:post) }
+    it { is_expected.not_to have_one(:post).with_model_class(:whatever) }
     it { is_expected.to have_one(:author) }
     it { is_expected.to have_one(:author).with_direction(:out) }
     it { is_expected.to have_one(:author).with_direction(:out).with_type(:author) }
