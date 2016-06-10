@@ -4,7 +4,8 @@ RSpec.describe "Has N" do
   describe Post do
     it { is_expected.to have_many(:comments) }
     it { is_expected.to have_many(:comments).with_direction(:in) }
-    it { is_expected.to have_many(:comments).with_direction(:in).with_origin(:post) }
+    it { is_expected.to have_many(:comments).with_direction(:in).with_rel_class(:Contains) }
+    it { is_expected.to have_many(:nice_comments).with_direction(:in).with_origin(:post) }
     it { is_expected.to have_one(:author) }
     it { is_expected.to have_one(:author).with_direction(:out) }
     it { is_expected.to have_one(:author).with_direction(:out).with_type(:author) }
