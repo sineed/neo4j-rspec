@@ -7,6 +7,7 @@ class Post
   property :custom_constraint, constraint: :unique
   include Neo4j::Timestamps
 
-  has_many :in, :comments, origin: :post
+  has_many :in, :comments, rel_class: :Contains
+  has_many :in, :nice_comments, origin: :post, model_class: :Comment
   has_one :out, :author, type: :author, model_class: :Person
 end

@@ -51,6 +51,16 @@ module Neo4j
               "with #{expected.join(', ')} model class"
             end
           end
+
+          class RelationshipClassMatcher < Base
+            def match(association)
+              association.relationship_class_name.to_sym == expected.to_sym
+            end
+
+            def description
+              "with #{expected} relationship class"
+            end
+          end
         end
 
         module Without
@@ -120,6 +130,10 @@ module Neo4j
 
             chain :with_model_class do |*model_classes|
               matchers.push With::ModelClassMatcher.new(model_classes)
+            end
+
+            chain :with_rel_class do |rel_class|
+              matchers.push With::RelationshipClassMatcher.new(rel_class)
             end
 
             chain :without_type do
