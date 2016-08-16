@@ -3,10 +3,14 @@ module Neo4j
     module Compat
       class << self
         def current
-          case Neo4j::VERSION
-          when /^6/ then Neo4jrb6.new
-          when /^7/ then Neo4jrb7.new
-          end
+          current_class.new
+        end
+
+        private
+
+        def current_class
+          gem_version = Gem::Version.new(Neo4j::VERSION)
+          gem_version >= Gem::Version.new('7.0.0') ? Neo4jrb7 : Neo4jrb6
         end
       end
 
