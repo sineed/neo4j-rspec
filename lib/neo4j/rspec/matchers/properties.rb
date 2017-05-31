@@ -31,14 +31,10 @@ module Neo4j
         matcher :define_property do |name, type = nil|
           match do |model|
             name = name.to_s
-            return false unless model.class.attributes.key?(name)
+            expected_type = -> { type == :Boolean ? Neo4j::Shared::Boolean : Object.const_get(type.to_s) }
 
-            if type
-              nesting = Neo4j::RSpec::Compat.current.property_nesting
-              [nesting, Module].any? { |md| md.constants.any? { |c| type == c } }
-            else
-              true
-            end
+            model.class.attributes.key?(name) &&
+                (type.nil? || model.class.attributes[name].type == expected_type.call)
           end
 
           failure_message do |model|
