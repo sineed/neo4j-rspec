@@ -32,6 +32,7 @@ end
         it { is_expected.to define_property :general }
         it { is_expected.to define_property :string, :String }
         it { is_expected.to define_property :boolean, :Boolean }
+        it { is_expected.to define_property :boolean, :'Neo4j::Shared::Boolean' }
 - Relationships
 
         it { is_expected.to have_many(:comments) }
