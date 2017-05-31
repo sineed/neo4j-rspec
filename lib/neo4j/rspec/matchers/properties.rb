@@ -31,10 +31,9 @@ module Neo4j
         matcher :define_property do |name, type = nil|
           match do |model|
             name = name.to_s
-            expected_type = -> { type == :Boolean ? Neo4j::Shared::Boolean : Object.const_get(type.to_s) }
 
-            model.class.attributes.key?(name) &&
-                (type.nil? || model.class.attributes[name].type == expected_type.call)
+            expected_type = Neo4j::Shared.const_get(type.to_s) if type
+            model.class.attributes.key?(name) && model.class.attributes[name].type == expected_type
           end
 
           failure_message do |model|
