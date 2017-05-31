@@ -20,16 +20,11 @@ RSpec.describe "Property matchers" do
     it { is_expected.to track_creations }
 
     describe 'negative case' do
-      subject do
-        begin
-          expect(Post.new).to define_property(:description, :Integer)
-        rescue => e
-          e
-        end
-      end
+      subject { expect(Post.new).to define_property(:description, :Integer) }
 
       it 'should fail on invalid property type' do
-        expect { subject }.to raise_error RSpec::Expectations::ExpectationNotMetError
+        expect { subject }.to raise_error RSpec::Expectations::ExpectationNotMetError,
+                                          'expected the Post model to have a `Integer` property description'
       end
     end
   end
