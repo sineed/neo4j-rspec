@@ -10,6 +10,6 @@ env:
   global:
   - TRAVISCI=1
   matrix:
-  - NEO4J_VERSION=6.0.9
   - NEO4J_VERSION=7.2.3
-  - NEO4J_VERSION=8.1.3
+  - NEO4J_VERSION=8.3.4
+  - NEO4J_VERSION=9.2.2
