@@ -1,15 +1,16 @@
-script: "bundle exec rake neo4j:install[community-2.3.0] neo4j:start default --trace"
+before_install:
+  - "gem update --system"
+  - "gem install bundler"
+script:
+  - "travis_retry bundle exec rake default --trace"
 language: ruby
 cache: bundler
 sudo: false
 rvm:
-  - 2.2.0
-  - 2.3.0
+  - 2.3
+  - 2.4
+  - 2.5
 gemfile: travis.gemfile
 env:
   global:
   - TRAVISCI=1
-  matrix:
-  - NEO4J_VERSION=6.0.9
-  - NEO4J_VERSION=7.2.3
-  - NEO4J_VERSION=8.1.3
