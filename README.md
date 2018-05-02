@@ -44,6 +44,7 @@ end
         it { is_expected.to define_constraint :name, :unique }
 - Indexes
 
+        # DEPRECATED!  Newer version of the `neo4j` gem no longer support defining indexes on the model
         it { is_expected.to define_index(:index_name) }
 - Tracking
 
