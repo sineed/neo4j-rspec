@@ -1,5 +1,5 @@
 script:
-  - "travis_retry bin/rake default --trace"
+  - "travis_retry bundle exec rake default --trace"
 language: ruby
 cache: bundler
 sudo: false
