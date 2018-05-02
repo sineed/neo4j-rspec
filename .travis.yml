@@ -1,10 +1,11 @@
-script: "bundle exec rake neo4j:install[community-2.3.0] neo4j:start default --trace"
+script: "bundle exec rake neo4j:install[community-latest] neo4j:start default --trace"
 language: ruby
 cache: bundler
 sudo: false
 rvm:
-  - 2.2.0
-  - 2.3.0
+  - 2.3
+  - 2.4
+  - 2.5
 gemfile: travis.gemfile
 env:
   global:
