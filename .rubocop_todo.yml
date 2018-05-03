@@ -15,13 +15,6 @@ Bundler/OrderedGems:
     - 'Gemfile'
     - 'travis.gemfile'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'lib/neo4j/rspec/matchers/has_n.rb'
-
 # Offense count: 5
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:

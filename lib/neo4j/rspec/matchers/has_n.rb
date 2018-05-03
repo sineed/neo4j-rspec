@@ -140,7 +140,7 @@ module Neo4j
               matchers.push Without::TypeMatcher.new
             end
 
-            description do |model|
+            description do |_model|
               with_messages = matchers.map(&:description).join(" ")
               macro.description(association_name) + " " + with_messages
             end
