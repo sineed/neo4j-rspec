@@ -24,13 +24,6 @@ Style/Documentation:
     - 'lib/neo4j/rspec/matchers/relations.rb'
 
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: MinSize.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
 # Offense count: 26
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
