@@ -5,6 +5,6 @@ gemspec
 gem 'rubocop', '~> 0.55.0'
 
 group :test do
-  gem "rspec"
   gem "pry"
+  gem "rspec"
 end
