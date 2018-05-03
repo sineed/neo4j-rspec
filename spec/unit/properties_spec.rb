@@ -24,4 +24,3 @@ RSpec.describe "Property matchers" do
     it { is_expected.not_to track_creations }
   end
 end
-

@@ -15,16 +15,6 @@ Bundler/OrderedGems:
     - 'Gemfile'
     - 'travis.gemfile'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingBlankLines:
-  Exclude:
-    - 'lib/neo4j/rspec/matchers/properties.rb'
-    - 'lib/neo4j/rspec/matchers/relations.rb'
-    - 'spec/unit/properties_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
