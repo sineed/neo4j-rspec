@@ -23,13 +23,6 @@ Style/Documentation:
     - 'lib/neo4j/rspec/matchers/properties.rb'
     - 'lib/neo4j/rspec/matchers/relations.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'lib/neo4j/rspec/matchers/properties.rb'
 
 # Offense count: 56
 # Cop supports --auto-correct.
