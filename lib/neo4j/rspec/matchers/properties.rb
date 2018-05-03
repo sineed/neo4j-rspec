@@ -31,14 +31,9 @@ module Neo4j
         matcher :define_property do |name, type = nil|
           match do |model|
             name = name.to_s
-            return false unless model.class.attributes.key?(name)
 
-            if type
-              nesting = Neo4j::RSpec::Compat.current.property_nesting
-              [nesting, Module].any? { |md| md.constants.any? { |c| type == c } }
-            else
-              true
-            end
+            expected_type = Neo4j::Shared.const_get(type.to_s) if type
+            model.class.attributes.key?(name) && model.class.attributes[name].type == expected_type
           end
 
           failure_message do |model|
@@ -89,4 +84,3 @@ module Neo4j
     end
   end
 end
-

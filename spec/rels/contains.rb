@@ -3,5 +3,5 @@ class Contains
 
   from_class :Post
   to_class :Comment
-  type "contains"
+  type 'contains'
 end

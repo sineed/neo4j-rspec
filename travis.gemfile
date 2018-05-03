@@ -1,5 +1,0 @@
-source "https://rubygems.org"
-
-gem 'rake'
-gem 'neo4j', ENV["NEO4J_VERSION"]
-gem 'rspec', "~> 3.4"

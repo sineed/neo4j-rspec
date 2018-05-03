@@ -70,7 +70,7 @@ module Neo4j
             end
 
             def description
-              "without type"
+              'without type'
             end
           end
         end
@@ -140,14 +140,14 @@ module Neo4j
               matchers.push Without::TypeMatcher.new
             end
 
-            description do |model|
-              with_messages = matchers.map(&:description).join(" ")
-              macro.description(association_name) + " " + with_messages
+            description do |_model|
+              with_messages = matchers.map(&:description).join(' ')
+              macro.description(association_name) + ' ' + with_messages
             end
 
             failure_message do |model|
-              with_messages = matchers.map(&:description).join(" ")
-              macro.failure_message(model.class.name) + " " + with_messages
+              with_messages = matchers.map(&:description).join(' ')
+              macro.failure_message(model.class.name) + ' ' + with_messages
             end
           end
         end
