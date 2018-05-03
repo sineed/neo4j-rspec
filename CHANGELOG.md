@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.2.6] - 2018-05-03
+
+### Fixed
+- Issue when RSpec is not defined (see #25 / thanks @capitalist)
+
 ## [0.2.5] - 2018-05-03
 
 ### Fixed
