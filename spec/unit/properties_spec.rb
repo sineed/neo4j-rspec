@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'spec_helper'
 
-RSpec.describe "Property matchers" do
+RSpec.describe 'Property matchers' do
   describe Post do
     describe 'define_property' do
       it { is_expected.to define_property(:title) }

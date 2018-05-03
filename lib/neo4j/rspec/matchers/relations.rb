@@ -52,7 +52,7 @@ module Neo4j
           end
 
           description do
-            msg = "use CREATE UNIQUE"
+            msg = 'use CREATE UNIQUE'
             msg += " with option #{arg}" if arg
             msg
           end

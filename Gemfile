@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 gemspec
 
@@ -9,5 +9,5 @@ gem 'rake', '~> 12.3.1'
 gem 'rubocop', '~> 0.55.0'
 
 group :test do
-  gem 'rspec', "~> 3.4"
+  gem 'rspec', '~> 3.4'
 end
