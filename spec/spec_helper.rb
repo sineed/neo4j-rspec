@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require "neo4j/rspec"
 require "neo4j"
 require "pry" unless ENV["TRAVISCI"]

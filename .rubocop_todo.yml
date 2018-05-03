@@ -23,13 +23,6 @@ Style/Documentation:
     - 'lib/neo4j/rspec/matchers/properties.rb'
     - 'lib/neo4j/rspec/matchers/relations.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/ExpandPathArguments:
-  Exclude:
-    - 'neo4j-rspec.gemspec'
-    - 'spec/spec_helper.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/MutableConstant:
