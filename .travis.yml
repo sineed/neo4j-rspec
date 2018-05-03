@@ -3,6 +3,7 @@ before_install:
   - "gem install bundler"
 script:
   - "travis_retry bundle exec rake default --trace"
+  - "bundle exec rubocop -D"
 language: ruby
 cache: bundler
 sudo: false
