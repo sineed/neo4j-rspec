@@ -15,5 +15,5 @@ env:
   global:
   - TRAVISCI=1
   matrix:
-    NEO4J_GEM_VERSION: ~> 9.0
-    NEO4J_GEM_VERSION: ~> 8.0
+    - NEO4J_GEM_VERSION="~> 9.0"
+    - NEO4J_GEM_VERSION="~> 8.0"
