@@ -74,10 +74,10 @@ module Neo4j
             end
             msg
           end
+        end
 
-          def failure_start(rel)
-            "expected the #{rel.class.name} relation"
-          end
+        def failure_start(rel)
+          "expected the #{rel.class.name} relation"
         end
       end
     end
